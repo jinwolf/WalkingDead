@@ -1,9 +1,12 @@
-
-      var canvasHeight = 386;
-      var canvasWidth = 900;
-      var k = 60;
-
-
+<html>
+   <head>
+      <title>Box2dWeb example</title>
+   </head>
+   <body onload="init();">
+      <canvas id="canvas" width="600" height="400" style="border:solid 1px red;"></canvas>
+   </body>
+   <script type="text/javascript" src="Box2dWeb-2.1.a.3.min.js"></script>
+   <script type="text/javascript">
       var world;
       
       function init() {
@@ -20,7 +23,7 @@
             ;
          
          world = new b2World(
-               new b2Vec2(0, 150)    //gravity
+               new b2Vec2(0, 300)    //gravity
             ,  true                 //allow sleep
          );
          
@@ -33,38 +36,37 @@
          
          //create ground
          bodyDef.type = b2Body.b2_staticBody;
-         bodyDef.position.x = 0;
-         bodyDef.position.y = 300-12;
+         bodyDef.position.x = 102;
+         bodyDef.position.y = 400-12;
          fixDef.shape = new b2PolygonShape;
-         fixDef.shape.SetAsBox(canvasWidth-20, 10);
+         fixDef.shape.SetAsBox(100, 10);
          world.CreateBody(bodyDef).CreateFixture(fixDef);
          
          //create some objects
-/*         bodyDef.type = b2Body.b2_dynamicBody;
+         bodyDef.type = b2Body.b2_dynamicBody;
          for(var i = 0; i < 10; ++i) {
-            if(Math.random()*k > 0.5) {
+            if(Math.random() > 0.5) {
                fixDef.shape = new b2PolygonShape;
                fixDef.shape.SetAsBox(
-                     Math.random()*k + 0.1 //half width
-                  ,  Math.random()*k + 0.1 //half height
+                     Math.random()*30 + 0.1 //half width
+                  ,  Math.random()*30 + 0.1 //half height
                );
             } else {
                fixDef.shape = new b2CircleShape(
-                  Math.random()*k + 0.1 //radius
+                  Math.random()*30 + 0.1 //radius
                );
             }
-            bodyDef.position.x = Math.random()*k * 10;
-            bodyDef.position.y = Math.random()*k * 10;
+            bodyDef.position.x = Math.random()*30 * 10;
+            bodyDef.position.y = Math.random()*30 * 10;
             world.CreateBody(bodyDef).CreateFixture(fixDef);
-         }*/
-
-
+         }
+         
          //setup debug draw
          var debugDraw = new b2DebugDraw();
 			debugDraw.SetSprite(document.getElementById("canvas").getContext("2d"));
-			debugDraw.SetDrawScale(0.5);
+			debugDraw.SetDrawScale(1.0);
 			debugDraw.SetFillAlpha(0.3);
-			debugDraw.SetLineThickness(2.0);
+			debugDraw.SetLineThickness(1.0);
 			debugDraw.SetFlags(b2DebugDraw.e_shapeBit | b2DebugDraw.e_jointBit);
 			world.SetDebugDraw(debugDraw);
          
@@ -80,31 +82,8 @@
          world.DrawDebugData();
          world.ClearForces();
       };
-
-
-
-
-   var EntityClass = Class.extend({
-   // TASK #1
-   // Fill out the base class for game entities
-   // with the following properties:
-   // 
-   // 1) a 'pos' object with 'x' and 'y' properties
-   //    to keep track of the entity's position in
-   //    the game world.
-   // 
-   // 2) a 'size' object with 'x' and 'y' properties
-   //    to keep track of an entity's size for the
-   //    purpose of drawing.
-   // 
-   // 3) a blank update function we can overload to
-   //    update each entity in a specific manner.
-   //    This is what allows us to give each entity
-   //    type its own logic to perform each frame.
-   //
-   pos : {x:0,y:0},
-   size : {x:0,y:0},
-   last : {x:0,y:0},
-
-   update : function() { }
-});
+   
+   </script>
+   
+   
+</html>
