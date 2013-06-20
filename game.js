@@ -83,6 +83,7 @@
 
 
 
+   var factory = {};
 
    var EntityClass = Class.extend({
    // TASK #1
@@ -107,4 +108,17 @@
    last : {x:0,y:0},
 
    update : function() { }
+   });
+
+   var PlayerClass = EntityClass.extend({
+
+   });
+
+   factory['PlayerClass'] = PlayerClass;
+
+
+
+
+
+GameEngineClass = Class.extend({
 });
