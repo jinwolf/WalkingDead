@@ -94,7 +94,7 @@ var GameEngine = Class.extend({
          //this.addPlayer(50, 10, 1);
 
          gGameEngine.addPlayer(20,20,1);
-         gGameEngine.addZombie(100,20,1, 'image/einstein-zombie.png');
+         gGameEngine.addZombie(280,20,1, 'image/einstein-zombie.png');
 
 
          if (!gInputEngine.bindings.length) {

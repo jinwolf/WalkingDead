@@ -35,13 +35,13 @@ Bot = Player.extend({
 
       var spriteSheet = new createjs.SpriteSheet({
          images: [img],
-         frames: { width: this.size.w, height: this.size.h, count: 4 },
+         frames: { width: this.size.w, height: this.size.h, count: 8 },
          animations: {
              idle: [0, 0, 'idle'],
              //down: [0, 3, 'down', 10],
              left: [0, 1, 'left', 10],
              //up: [8, 11, 'up', 10],
-             right: [2, 3, 'right', 10],
+             right: [4, 5, 'right', 10],
              //dead: [16, 16, 'dead', 10]
          }
       });
@@ -52,8 +52,6 @@ Bot = Player.extend({
 
       this.bmp.scaleY = 0.45;
       this.bmp.scaleX = 0.45;
-
-      b = this.bmp;
 
       this.bmp.x = position.x;
       this.bmp.y = position.y;
@@ -105,20 +103,32 @@ Bot = Player.extend({
             return;
         }
 
+        var playerX = gGameEngine.players[0].body.GetPosition().x;
+        var botX = this.body.GetPosition().x;
+        var botY = this.body.GetPosition().y;
+
+        
+
+
+        var direction = "";
+        if(playerX < botX)
+        {
+            direction = "left";
+        }
+        else
+        {
+            direction = "right";
+        }
+
+        if(botY<7)
+        {
+            direction = "";
+        }
+
+
         var that = this;
-        if (gInputEngine.actions[this.controls.up]) {
-            //this.animate('up');
-            // position.y -= this.velocity;
-            // dirY = -1;
-            //that.body.SetLinearVelocity(new b2Vec2(that.vecX, 500));
 
-        } else if (gInputEngine.actions[this.controls.down]) {
-            //this.animate('down');
-            // position.y += this.velocity;
-            // dirY = 1;
-            // that.body.SetLinearVelocity(new b2Vec2(0,0));
-
-        } else if (gInputEngine.actions[this.controls.left]) {
+        if (direction == "left") {
             this.animate('left');
             this.isStopped = false;
             //position.x -= this.velocity;
@@ -126,33 +136,69 @@ Bot = Player.extend({
             that.vecX = -4;
             that.body.SetLinearVelocity(new b2Vec2(that.vecX,0));
 
-        } else if (gInputEngine.actions[this.controls.right]) {
+        } else if (direction == "right") {
             this.animate('right');
             this.isStopped = false;
             //position.x += this.velocity;
             //dirX = 1;
             that.vecX = 4;
             that.body.SetLinearVelocity(new b2Vec2(that.vecX,0));
-
-         } else if (gInputEngine.actions[this.controls.shoot]) {
-            //this.animate('right');
-            //position.x += this.velocity;
-            //dirX = 1;
-            that.vecX = -1;
-            that.body.SetLinearVelocity(new b2Vec2(that.vecX,0));
-
-         } else if (gInputEngine.actions[this.controls.punch]) {
-            //this.animate('right');
-            //position.x += this.velocity;
-            //dirX = 1;
-            that.vecX = 1;
-            that.body.SetLinearVelocity(new b2Vec2(that.vecX,0));
-
-        } else {
+        }
+        else {
             this.bmp.stop();
             that.body.SetLinearVelocity(new b2Vec2(0,0));
             that.isStopped = true;
         }
+
+
+
+        // if (gInputEngine.actions[this.controls.up]) {
+        //     //this.animate('up');
+        //     // position.y -= this.velocity;
+        //     // dirY = -1;
+        //     //that.body.SetLinearVelocity(new b2Vec2(that.vecX, 500));
+
+        // } else if (gInputEngine.actions[this.controls.down]) {
+        //     //this.animate('down');
+        //     // position.y += this.velocity;
+        //     // dirY = 1;
+        //     // that.body.SetLinearVelocity(new b2Vec2(0,0));
+
+        // } else if (gInputEngine.actions[this.controls.left]) {
+        //     this.animate('left');
+        //     this.isStopped = false;
+        //     //position.x -= this.velocity;
+        //     //dirX = -1;
+        //     that.vecX = -4;
+        //     that.body.SetLinearVelocity(new b2Vec2(that.vecX,0));
+
+        // } else if (gInputEngine.actions[this.controls.right]) {
+        //     this.animate('right');
+        //     this.isStopped = false;
+        //     //position.x += this.velocity;
+        //     //dirX = 1;
+        //     that.vecX = 4;
+        //     that.body.SetLinearVelocity(new b2Vec2(that.vecX,0));
+
+        //  } else if (gInputEngine.actions[this.controls.shoot]) {
+        //     //this.animate('right');
+        //     //position.x += this.velocity;
+        //     //dirX = 1;
+        //     that.vecX = -1;
+        //     that.body.SetLinearVelocity(new b2Vec2(that.vecX,0));
+
+        //  } else if (gInputEngine.actions[this.controls.punch]) {
+        //     //this.animate('right');
+        //     //position.x += this.velocity;
+        //     //dirX = 1;
+        //     that.vecX = 1;
+        //     that.body.SetLinearVelocity(new b2Vec2(that.vecX,0));
+
+        // } else {
+        //     this.bmp.stop();
+        //     that.body.SetLinearVelocity(new b2Vec2(0,0));
+        //     that.isStopped = true;
+        // }
 
       },
 
