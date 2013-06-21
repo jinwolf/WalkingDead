@@ -40,15 +40,15 @@ var Player = Entity.extend({
 
 		var spriteSheet = new createjs.SpriteSheet({
 			images: [img],
-			frames: { width: this.size.w, height: this.size.h, count:6 },
+			frames: { width: this.size.w, height: this.size.h, count:8 },
 			animations: {
 				idle: [0, 0, 'idle'],
-				left: [4, 5, 'left', 10],
+				left: [5, 6, 'left', 10],
 				right: [0, 1, 'right', 10],
 				shoot_right: [2, 2, 'shoot_right'],
-				shoot_left: [3, 3, 'shoot_left'],
-				punch_right: [0, 1, 'punch_right', 10], // TODO: need updated sprite from Dave w/ Punch frames
-				punch_left: [4, 5, 'punch_left', 10]
+				shoot_left: [4, 4, 'shoot_left'],
+				punch_right: [3, 3, 'punch_right'], 
+				punch_left: [7, 7, 'punch_left']
 				//dead: [16, 16, 'dead', 10]
 			}
 		});

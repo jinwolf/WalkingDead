@@ -213,21 +213,20 @@ var GameEngine = Class.extend({
             }
          }
 
-         if(playerObj.isShooting)
+         if(playerObj.isShooting || playerObj.isPunching)
          {
-            var shootingDistance = 7;
-            //console.log("shooting");
+            var killDistance = playerObj.isPunching ? 3 : 7;
             var playerX = playerObj.body.GetPosition().x;
             var min, max;
             if(playerObj.direction == "left")
             {
-               min = playerX - shootingDistance;
+               min = playerX - killDistance;
                max = playerX;
             }
             else if(playerObj.direction == "right")
             {
                min = playerX;
-               max = playerX + shootingDistance;
+               max = playerX + killDistance;
             }
 
             for (var i = 0; i < gGameEngine.zombies.length; i++) {
