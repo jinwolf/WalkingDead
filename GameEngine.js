@@ -21,6 +21,7 @@ var GameEngine = Class.extend({
       balls:[],
 
       players: [],
+      zombies: [],
 
       playerImg: null,
       
@@ -92,7 +93,9 @@ var GameEngine = Class.extend({
          //this.addBall(10, 10);
          //this.addPlayer(50, 10, 1);
 
-         gGameEngine.addPlayer(20,20,1)
+         gGameEngine.addPlayer(20,20,1);
+         gGameEngine.addZombie(100,20,1, 'image/einstein-zombie.png');
+
 
          if (!gInputEngine.bindings.length) {
             gInputEngine.setup();
@@ -115,8 +118,18 @@ var GameEngine = Class.extend({
          return player;
       },
 
-      actorObject : function(body, skin) {
+      addZombie: function(x,y,id, imgSrc)
+      {
+         var zombie = new factory["Bot"]({x:x,y:y}, id, imgSrc);
+         this.zombies.push(zombie);
+         return zombie;
+      },
+
+      actorObject : function(body, skin, delta) {
          
+         var deltaX = delta ? delta.x : 0;
+         var deltaY = delta ? delta.y : 0;
+
          var that = this;
 
          var actor = 
@@ -126,8 +139,8 @@ var GameEngine = Class.extend({
             update: function()// translate box2d positions to pixels
             {
                actor.skin.rotation = actor.body.GetAngle() * (180 / Math.PI);
-               actor.skin.x = actor.body.GetWorldCenter().x * that.scale - 10;
-               actor.skin.y = actor.body.GetWorldCenter().y * that.scale - 15 ;
+               actor.skin.x = actor.body.GetWorldCenter().x * that.scale - deltaX;
+               actor.skin.y = actor.body.GetWorldCenter().y * that.scale - deltaY ;
                
             }
          };
@@ -161,6 +174,12 @@ var GameEngine = Class.extend({
         for (var i = 0; i < gGameEngine.players.length; i++) {
             var player = gGameEngine.players[i];
             player.update();
+        }
+
+        // Zombies
+        for (var i = 0; i < gGameEngine.zombies.length; i++) {
+            var zombie = gGameEngine.zombies[i];
+            zombie.update();
         }
 
             // update active actors
