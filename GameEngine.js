@@ -158,11 +158,9 @@ var GameEngine = Class.extend({
                this.removeBody(this.zombies[i].body);
                this.zombies.splice(i, 1);
                //console.log(this.zombies.length);
-<<<<<<< HEAD
+
 			   this.zombieKills++;
 			   document.getElementById('scoreSpan').innerHTML = this.zombieKills;
-=======
->>>>>>> 603c39b568bfa0c1990ca30a43dd4e47eb2f07fd
             }
         }
       },
