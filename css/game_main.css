@@ -1,19 +1,32 @@
 body
 {
-	padding: 0px;
-	margin: 0px;
+	padding: 3px;
+	margin: 2px;
+	font:normal 12px Georgia, serif;
+}
+
+h1
+{
+	font:normal 24px Georgia, serif;
+	text-align: center;
+}
+h3
+{
+	font:normal 16px Georgia, serif;
+	text-align: center;
 }
 
 #canvas 
 {
 	background-image: url(../image/game_bg.jpg);
-	border: solid 2px green;
+	/*border: solid 2px green;*/
 	z-index: 1;
 }
 
 #debugCanvas 
 {
-	border:solid 1px red;
+	/*border:solid 1px red;*/
+	display: none;
 	left: 0;
     position: absolute;
     z-index: 2;
@@ -21,6 +34,7 @@ body
 
 .common
 {
-	width: 900px;
-	height: 386px;
+	width: 1600px;
+	height: 800px;
+	margin: 30px;
 }
