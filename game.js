@@ -12,4 +12,4 @@ var Player = Entity.extend({
 
 });
 
-factory['Player'] = PlayerClass;
+factory['Player'] = Player;

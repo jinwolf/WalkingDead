@@ -5,9 +5,10 @@ var GameEngine = Class.extend({
 
 
       world : null,
+      scale : 15,
       
       init: function() {
-         console.log('init');
+         console.log('init', this.scale);
 
          var that = this;
          var   b2Vec2 = Box2D.Common.Math.b2Vec2
@@ -36,10 +37,10 @@ var GameEngine = Class.extend({
          
          //create ground
          bodyDef.type = b2Body.b2_staticBody;
-         bodyDef.position.x = 0;
-         bodyDef.position.y = 300-12;
+         bodyDef.position.x = 150/that.scale;
+         bodyDef.position.y = 145/that.scale;
          fixDef.shape = new b2PolygonShape;
-         fixDef.shape.SetAsBox(that.canvasWidth-20, 10);
+         fixDef.shape.SetAsBox(150/that.scale, 5/that.scale);
          world.CreateBody(bodyDef).CreateFixture(fixDef);
          
          //create some objects
@@ -73,13 +74,15 @@ var GameEngine = Class.extend({
             console.log(context);
 
             debugDraw.SetSprite(context);
-            debugDraw.SetDrawScale(0.5);
+            debugDraw.SetDrawScale(that.scale);
             debugDraw.SetFillAlpha(0.3);
             debugDraw.SetLineThickness(2.0);
             debugDraw.SetFlags(b2DebugDraw.e_shapeBit | b2DebugDraw.e_jointBit);
+
             world.SetDebugDraw(debugDraw);
             window.setInterval(this.update, 1000 / 60);
          }
+
       },
       
       update : function() {
