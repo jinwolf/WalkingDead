@@ -62,16 +62,20 @@ Bot = Player.extend({
 
             // If we bumped into the wood, burn it!
             // If we are near player, kill it!
-            if (this.getNearWood() || this.wantKillPlayer()) {
+            /*if (this.getNearWood() || this.wantKillPlayer()) {
                 this.plantBomb();
-            }
+            }*/
+			
+			if(this.wantKillPlayer()) {
+				// TODO: kill!!!!
+			}
 
             // When in safety, wait until explosion
-            if (this.bombs.length) {
+            /*if (this.bombs.length) {
                 if (this.isSafe(this.position)) {
                     this.wait = true;
                 }
-            }
+            }*/
 
             if (!this.wait) {
                 this.findTargetPosition();
@@ -154,18 +158,18 @@ Bot = Player.extend({
             else if (i == 3) { dirX = 0; dirY = -1; }
 
             var position = { x: this.position.x + dirX, y: this.position.y + dirY };
-            if (gGameEngine.getTileMaterial(position) == 'grass' && !this.hasBomb(position)) {
+            /*if (gGameEngine.getTileMaterial(position) == 'grass' && !this.hasBomb(position)) {
                 targets.push(position);
-            }
+            }*/
         }
 
         var safeTargets = [];
-        for (var i = 0; i < targets.length; i++) {
+        /*for (var i = 0; i < targets.length; i++) {
             var target = targets[i];
             if (this.isSafe(target)) {
                 safeTargets.push(target);
             }
-        }
+        }*/
 
         var isLucky = Math.random() > 0.3;
         return safeTargets.length > 0 && isLucky ? safeTargets : targets;
@@ -244,7 +248,7 @@ Bot = Player.extend({
     /**
      * Checks whether there is any wood around.
      */
-    getNearWood: function() {
+    /*getNearWood: function() {
         for (var i = 0; i < 4; i++) {
             var dirX;
             var dirY;
@@ -258,7 +262,7 @@ Bot = Player.extend({
                 return gGameEngine.getTile(position);
             }
         }
-    },
+    },*/
 
     /**
      * Checks whether player is near. If yes and we are angry, return true.
@@ -294,6 +298,7 @@ Bot = Player.extend({
      * Places the bomb in current position
      */
     plantBomb: function() {
+		/*
         for (var i = 0; i < gGameEngine.bombs.length; i++) {
             var bomb = gGameEngine.bombs[i];
             if (Utils.comparePositions(bomb.position, this.position)) {
@@ -312,14 +317,15 @@ Bot = Player.extend({
                 Utils.removeFromArray(that.bombs, bomb);
                 that.wait = false;
             });
-        }
+        
+		*/
     },
 
     /**
      * Checks whether position is safe  and possible explosion cannot kill us.
      */
     isSafe: function(position) {
-        for (var i = 0; i < gGameEngine.bombs.length; i++) {
+        /*for (var i = 0; i < gGameEngine.bombs.length; i++) {
             var bomb = gGameEngine.bombs[i];
             var fires = bomb.getDangerPositions();
             for (var j = 0; j < fires.length; j++) {
@@ -328,17 +334,17 @@ Bot = Player.extend({
                     return false;
                 }
             }
-        }
+        }*/
         return true;
     },
 
     hasBomb: function(position) {
-        for (var i = 0; i < gGameEngine.bombs.length; i++) {
+        /*for (var i = 0; i < gGameEngine.bombs.length; i++) {
             var bomb = gGameEngine.bombs[i];
             if (Utils.comparePositions(bomb.position, position)) {
                 return true;
             }
-        }
+        }*/
         return false;
     }
 });
