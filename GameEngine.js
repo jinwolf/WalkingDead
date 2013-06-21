@@ -40,7 +40,7 @@ var GameEngine = Class.extend({
 
          var that = this;
 
-         this.playerImg = "image/dave-w-shotgun_sprite.png";
+         this.playerImg = "image/dave-w-shotgun-and-punch.png";
 
          
          this.world = new b2World(
