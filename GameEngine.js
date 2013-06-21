@@ -19,12 +19,24 @@ var GameEngine = Class.extend({
       bodies: [],
 
       balls:[],
+
+      players: [],
+
+      playerImg: null,
       
       init: function() {
+         // if canvas is not ready don't do anything
+         if(!document.getElementById("canvas"))
+         {
+            return;
+         }
+
          console.log('init', this.scale);
 
 
          var that = this;
+
+         this.playerImg = "images/betty.png";
 
          
          this.world = new b2World(
@@ -77,6 +89,8 @@ var GameEngine = Class.extend({
             this.startLoop();
          }
 
+         this.addBall(10, 10);
+         //this.addPlayer(50, 10, 1);
 
          if (!gInputEngine.bindings.length) {
             gInputEngine.setup();
@@ -85,35 +99,42 @@ var GameEngine = Class.extend({
 
       addBall: function(x,y)
       {
-         //debugger;
          var ball = new factory["Ball"](x,y,"image/bird.png");
          this.balls.push(ball);
          _body = ball;
          return ball;
       },
 
-      createBall: function(skin) {
-         var that = this;
-         //create a ball
-         var fixDef = new b2FixtureDef;
-         fixDef.density = 1.0;
-         fixDef.friction = 0.5;
-         fixDef.restitution = 1;
-
-         var bodyDef = new b2BodyDef;
-         bodyDef.type = b2Body.b2_dynamicBody;
-         bodyDef.position.x = skin.x/that.scale;
-         bodyDef.position.y = skin.y/that.scale;
-         fixDef.shape = new b2CircleShape(10/that.scale);
-
-         var body = this.world.CreateBody(bodyDef);
-         body.CreateFixture(fixDef);
-
-         // assign actor
-         var actor = this.actorObject(body, skin);
-         body.SetUserData(actor);  // set the actor as user data of the body so we can use it later: body.GetUserData()
-         this.bodies.push(body);
+      addPlayer: function(x, y, id)
+      {
+         debugger;
+         var player = new factory["Player"]({x:x,y:y}, id);
+         this.players.push(player);
+         return player;
       },
+
+      // createBall: function(skin) {
+      //    var that = this;
+      //    //create a ball
+      //    var fixDef = new b2FixtureDef;
+      //    fixDef.density = 1.0;
+      //    fixDef.friction = 0.5;
+      //    fixDef.restitution = 1;
+
+      //    var bodyDef = new b2BodyDef;
+      //    bodyDef.type = b2Body.b2_dynamicBody;
+      //    bodyDef.position.x = skin.x/that.scale;
+      //    bodyDef.position.y = skin.y/that.scale;
+      //    fixDef.shape = new b2CircleShape(10/that.scale);
+
+      //    var body = this.world.CreateBody(bodyDef);
+      //    body.CreateFixture(fixDef);
+
+      //    // assign actor
+      //    var actor = this.actorObject(body, skin);
+      //    body.SetUserData(actor);  // set the actor as user data of the body so we can use it later: body.GetUserData()
+      //    this.bodies.push(body);
+      // },
 
       actorObject : function(body, skin) {
          
@@ -146,7 +167,7 @@ var GameEngine = Class.extend({
       {
          var that = this;
 
-         this.createBall({x:100, y:45});
+         //this.createBall({x:100, y:45});
 
          createjs.Ticker.setFPS(60);
          createjs.Ticker.useRAF = true;
@@ -159,6 +180,12 @@ var GameEngine = Class.extend({
         for (var i = 0; i < gGameEngine.balls.length; i++) {
             var ball = gGameEngine.balls[i];
             ball.update();
+        }
+
+        // Players
+        for (var i = 0; i < gGameEngine.players.length; i++) {
+            var player = gGameEngine.players[i];
+            player.update();
         }
 
             // update active actors

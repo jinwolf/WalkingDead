@@ -21,15 +21,62 @@ Entity = Class.extend({
    }
 });
 
+
+
+
 var Player = Entity.extend({
-   init: function(position, controls, id) {
+    /**
+   * Bitmap dimensions
+   */
+    size: {
+        w: 48,
+        h: 48
+    },
+
+        /**
+* Bitmap animation
+*/
+    bmp: null,
+
+    body: null,
+
+   init: function(position, id) {
+         debugger;
+           var img = gGameEngine.playerImg;
+           if (!(this instanceof Bot)) {
+                   img = gGameEngine.playerImg;
+           }
+
+         var skinBMP = new createjs.Bitmap(img);
+         //skinBMP.x = Math.round(Math.random()*500);
+         skinBMP.x = position.x;
+         skinBMP.y = position.y;
+         skinBMP.regX = 25;   // important to set origin point to center of your bitmap
+         skinBMP.regY = 25; 
+         skinBMP.snapToPixel = true;
+         skinBMP.mouseEnabled = false;
+
+         skinBMP.rotation = 90;
+
+         skinBMP.scaleX = 0.5;
+         skinBMP.scaleY = 0.5;
+
+         gGameEngine.stage.addChild(skinBMP);
+         
+         //gGameEngine.createBall(skinBMP);
+         this.createObj(skinBMP);
+
+
+
+
+
+
+
       if (id) {
          this.id = id;
       }
 
-      if (controls) {
-         this.controls = controls;
-      }
+
 
       /*
       var spriteSheet = new createjs.SpriteSheet({
@@ -51,21 +98,73 @@ var Player = Entity.extend({
       this.bmp.x = pixels.x;
       this.bmp.y = pixels.y;
       */
-      var data = {
-         images: ["image/walking-man.jpg"],
-         frames: {width:50, height:50},
-         animations: {run:[0,4], jump:[5,8,"run"]}
-      };
-      
-      var spriteSheet = new createjs.SpriteSheet(data);
-      var animation = new createjs.BitmapAnimation(spriteSheet);
-      animation.gotoAndPlay("run");
+        var spriteSheet = new createjs.SpriteSheet({
+            images: [img],
+            frames: { width: this.size.w, height: this.size.h, regX: 10, regY: 12 },
+            animations: {
+                idle: [0, 0, 'idle'],
+                down: [0, 3, 'down', 10],
+                left: [4, 7, 'left', 10],
+                up: [8, 11, 'up', 10],
+                right: [12, 15, 'right', 10],
+                dead: [16, 16, 'dead', 10]
+            }
+        });
+        this.bmp = new createjs.BitmapAnimation(spriteSheet);
 
-      gGameEngine.stage.addChild(this.bmp);
+        this.position = position;
+        // var pixels = Utils.convertToBitmapPosition(position);
+        // this.bmp.x = pixels.x;
+        // this.bmp.y = pixels.y;
 
-      this.bombs = [];
-      this.setBombsListener();
+        gGameEngine.stage.addChild(this.bmp);
    },
+
+      createObj: function(skin)
+   {
+      var that = this;
+               //create a ball
+         var fixDef = new b2FixtureDef;
+         fixDef.density = 0.5;
+         fixDef.friction = 0.5;
+         fixDef.restitution = 1;
+
+         var bodyDef = new b2BodyDef;
+         bodyDef.type = b2Body.b2_dynamicBody;
+         bodyDef.position.x = skin.x/gGameEngine.scale;
+         bodyDef.position.y = skin.y/gGameEngine.scale;
+         fixDef.shape = new b2PolygonShape;
+         fixDef.shape.SetAsBox(10/that.scale, 20/that.scale);
+
+         this.body = gGameEngine.world.CreateBody(bodyDef);
+         this.body.CreateFixture(fixDef);
+
+         // assign actor
+         var actor = gGameEngine.actorObject(that.body, skin);
+         this.body.SetUserData(actor);  // set the actor as user data of the body so we can use it later: body.GetUserData()
+         //gGameEngine.bodies.push(that.body);
+         return that.body;
+   },
+
+
+
+
+
+      update: function() {
+        if (!this.alive) {
+            //this.fade();
+            return;
+        }
+      },
+
+       /**
+      * Changes animation if requested animation is not already current.
+      */
+       animate: function(animation) {
+           if (!this.bmp.currentAnimation || this.bmp.currentAnimation.indexOf(animation) === -1) {
+               this.bmp.gotoAndPlay(animation);
+           }
+       }
 });
 
 factory['Player'] = Player;
