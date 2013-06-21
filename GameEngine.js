@@ -1,4 +1,4 @@
-
+var _body = null;
 var GameEngine = Class.extend({
       canvasHeight : 386,
       canvasWidth : 900,
@@ -77,13 +77,19 @@ var GameEngine = Class.extend({
             this.startLoop();
          }
 
+
+         if (!gInputEngine.bindings.length) {
+            gInputEngine.setup();
+         }
       },
 
       addBall: function(x,y)
       {
          //debugger;
          var ball = new factory["Ball"](x,y,"image/bird.png");
-
+         this.balls.push(ball);
+         _body = ball;
+         return ball;
       },
 
       createBall: function(skin) {
@@ -142,12 +148,19 @@ var GameEngine = Class.extend({
 
          this.createBall({x:100, y:45});
 
-         createjs.Ticker.setFPS(30);
+         createjs.Ticker.setFPS(60);
          createjs.Ticker.useRAF = true;
          createjs.Ticker.addListener(that);  // looks for "tick" function within THIS object
       },
       
       tick : function(dt, paused){
+
+        // Balls
+        for (var i = 0; i < gGameEngine.balls.length; i++) {
+            var ball = gGameEngine.balls[i];
+            ball.update();
+        }
+
             // update active actors
          for(var i=0, l=this.actors.length; i<l; i++) {
             this.actors[i].update();

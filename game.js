@@ -75,9 +75,17 @@ factory['Player'] = Player;
 
 
 var Ball = Entity.extend({
+    controls: {
+        'up': 'up',
+        'left': 'left',
+        'down': 'down',
+        'right': 'right',
+    },
+    body: null,
+    vecX: null,
+
    init: function(x,y,imgSrc)
    {
-      console.log(arguments);
          //var skinBMP = new createjs.Bitmap("image/bird.png");
          var skinBMP = new createjs.Bitmap(imgSrc);
          //skinBMP.x = Math.round(Math.random()*500);
@@ -101,9 +109,10 @@ var Ball = Entity.extend({
 
    createObj: function(skin)
    {
+      var that = this;
                //create a ball
          var fixDef = new b2FixtureDef;
-         fixDef.density = 1.0;
+         fixDef.density = 0.5;
          fixDef.friction = 0.5;
          fixDef.restitution = 1;
 
@@ -113,13 +122,48 @@ var Ball = Entity.extend({
          bodyDef.position.y = skin.y/gGameEngine.scale;
          fixDef.shape = new b2CircleShape(10/gGameEngine.scale);
 
-         var body = gGameEngine.world.CreateBody(bodyDef);
-         body.CreateFixture(fixDef);
+         this.body = gGameEngine.world.CreateBody(bodyDef);
+         this.body.CreateFixture(fixDef);
 
          // assign actor
-         var actor = gGameEngine.actorObject(body, skin);
-         body.SetUserData(actor);  // set the actor as user data of the body so we can use it later: body.GetUserData()
-         gGameEngine.bodies.push(body);
+         var actor = gGameEngine.actorObject(that.body, skin);
+         this.body.SetUserData(actor);  // set the actor as user data of the body so we can use it later: body.GetUserData()
+         //gGameEngine.bodies.push(that.body);
+         return that.body;
+   },
+
+   update: function()
+   {
+      var that = this;
+         if (gInputEngine.actions[this.controls.up]) {
+            // this.animate('up');
+            // position.y -= this.velocity;
+            // dirY = -1;
+            that.body.SetLinearVelocity(new b2Vec2(that.vecX, 500));
+        } else if (gInputEngine.actions[this.controls.down]) {
+            // this.animate('down');
+            // position.y += this.velocity;
+            // dirY = 1;
+            that.body.SetLinearVelocity(new b2Vec2(0,0));
+        } else if (gInputEngine.actions[this.controls.left]) {
+            //this.animate('left');
+            // position.x -= this.velocity;
+            // dirX = -1;
+            that.vecX = -2;
+            that.body.SetLinearVelocity(new b2Vec2(that.vecX,0));
+            
+        } else if (gInputEngine.actions[this.controls.right]) {
+            //this.animate('right');
+            // position.x += this.velocity;
+            // dirX = 1;
+            that.vecX = 2;
+            that.body.SetLinearVelocity(new b2Vec2(that.vecX,0));
+            
+        } else {
+            //this.animate('idle');
+            //console.log('idle');
+            //that.body.SetLinearVelocity(new b2Vec2(0,0));
+        }
    }
 });
 
