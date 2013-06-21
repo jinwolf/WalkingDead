@@ -5,6 +5,10 @@ var GameEngine = Class.extend({
 
       canvas:null,
       context:null,
+
+      debugCanvas:null,
+      debugContext:null,
+
       stage:null,
 
       world : null,
@@ -71,15 +75,20 @@ var GameEngine = Class.extend({
          var debugDraw = new b2DebugDraw();
 
          this.canvas = document.getElementById("canvas");
-         this.context = null;
+         this.debugCanvas = document.getElementById("debugCanvas");
+
          if(this.canvas)
          {
-            this.context = canvas.getContext("2d");
+            this.context = this.canvas.getContext("2d");
+            this.debugContext = this.debugCanvas.getContext("2d");
+
+
+            // stage will get real canvas to draw images
             this.stage = new createjs.Stage(canvas);
             this.stage.snapPixelsEnabled = true;
-            console.log(this.context);
 
-            debugDraw.SetSprite(that.context);
+            // box2D will get debugCanvasContext to draw fixtures
+            debugDraw.SetSprite(that.debugContext);
             debugDraw.SetDrawScale(that.scale);
             debugDraw.SetFillAlpha(0.3);
             debugDraw.SetLineThickness(1.0);
@@ -87,12 +96,7 @@ var GameEngine = Class.extend({
 
             this.world.SetDebugDraw(debugDraw);
 
-            // window.setInterval(function(){
-            //    that.update(that);
-            //    //console.log(that);
-
-            // }, 1000 / 60);
-
+            // starts the game loop
             this.startLoop();
          }
 
@@ -103,7 +107,7 @@ var GameEngine = Class.extend({
          var that = this;
          createjs.Ticker.setFPS(30);
          createjs.Ticker.useRAF = true;
-         createjs.Ticker.addListener(that);  // looks for "tick" function within the luxanimals.demo object
+         createjs.Ticker.addListener(that);  // looks for "tick" function within THIS object
       },
       
       tick : function(dt, paused){
@@ -115,6 +119,8 @@ var GameEngine = Class.extend({
          );
          this.world.DrawDebugData();
          this.world.ClearForces();
+
+         this.stage.update();
       }
 
    });
