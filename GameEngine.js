@@ -103,6 +103,10 @@ var GameEngine = Class.extend({
          if (!gInputEngine.bindings.length) {
             gInputEngine.setup();
          }
+
+
+         createjs.Sound.registerSound("sound/bomb.mp3|sound/bomb.ogg", "bomb");
+
       },
 
     removeBody: function (obj) {
@@ -208,7 +212,7 @@ var GameEngine = Class.extend({
             if(Math.abs(scaledPlayerX-scaledZombieX) > 100)
             {
                //console.log(scaledPlayerX, scaledZombieX);
-              var choice = Math.round(Math.random());
+              var choice = Math.round(Math.random()*(this.zombieSprites.length-1));
               gGameEngine.addZombie(scaledZombieX, 20, this.currentZombieId++, this.zombieSprites[choice]); 
             }
          }
