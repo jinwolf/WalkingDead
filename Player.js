@@ -27,15 +27,19 @@ var Player = Entity.extend({
     body: null,
 
    init: function(position, id) {
+
+
            var img = gGameEngine.playerImg;
            if (!(this instanceof Bot)) {
                    img = gGameEngine.playerImg;
            }
 
+
       if (id) {
          this.id = id;
       }
 
+      
       var spriteSheet = new createjs.SpriteSheet({
          images: [img],
          frames: { width: this.size.w, height: this.size.h, regX: 10, regY: 12 },
@@ -60,6 +64,9 @@ var Player = Entity.extend({
 
       this.bmp.x = position.x;
       this.bmp.y = position.y;
+
+
+
 
 
       /////// CREATING 
