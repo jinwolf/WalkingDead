@@ -1,0 +1,52 @@
+#container {
+    background: url(../image/sprite_hobo_anim.png) no-repeat top left;  /* TODO: this won't work because there is no element named 'container' */
+}
+
+.sprite-HoboAnim_00A{ background-position: 0 0; width: 119px; height: 64px; } 
+.sprite-HoboAnim_00AFlip{ background-position: 0 -114px; width: 119px; height: 64px; } 
+.sprite-HoboAnim_00B{ background-position: 0 -228px; width: 63px; height: 64px; } 
+.sprite-HoboAnim_00BFlip{ background-position: 0 -342px; width: 63px; height: 64px; } 
+.sprite-HoboAnim_02A{ background-position: 0 -456px; width: 115px; height: 66px; } 
+.sprite-HoboAnim_02AFlip{ background-position: 0 -572px; width: 115px; height: 66px; } 
+.sprite-HoboAnim_02B{ background-position: 0 -688px; width: 64px; height: 66px; } 
+.sprite-HoboAnim_02BFlip{ background-position: 0 -804px; width: 64px; height: 66px; } 
+.sprite-HoboAnim_03A{ background-position: 0 -920px; width: 223px; height: 132px; } 
+.sprite-HoboAnim_03AFlip{ background-position: 0 -1102px; width: 223px; height: 132px; } 
+.sprite-HoboAnim_03B{ background-position: 0 -1284px; width: 223px; height: 64px; } 
+.sprite-HoboAnim_03BFlip{ background-position: 0 -1398px; width: 223px; height: 64px; } 
+.sprite-HoboAnim_04A{ background-position: 0 -1512px; width: 223px; height: 132px; } 
+.sprite-HoboAnim_04AFlip{ background-position: 0 -1694px; width: 223px; height: 132px; } 
+.sprite-HoboAnim_05A{ background-position: 0 -1876px; width: 223px; height: 132px; } 
+.sprite-HoboAnim_05AFlip{ background-position: -273px 0; width: 223px; height: 132px; } 
+.sprite-HoboAnim_05B{ background-position: -273px -182px; width: 223px; height: 64px; } 
+.sprite-HoboAnim_05BFlip{ background-position: -273px -296px; width: 223px; height: 64px; } 
+.sprite-HoboAnim_06A{ background-position: -273px -410px; width: 223px; height: 132px; } 
+.sprite-HoboAnim_06AFlip{ background-position: -273px -592px; width: 223px; height: 132px; } 
+.sprite-HoboAnim_07A{ background-position: -273px -774px; width: 223px; height: 132px; } 
+.sprite-HoboAnim_07AFlip{ background-position: -273px -956px; width: 223px; height: 132px; } 
+.sprite-HoboAnim_07B{ background-position: -273px -1138px; width: 223px; height: 64px; } 
+.sprite-HoboAnim_07BFlip{ background-position: -273px -1252px; width: 223px; height: 64px; } 
+.sprite-HoboAnim_08A{ background-position: -273px -1366px; width: 223px; height: 132px; } 
+.sprite-HoboAnim_08AFlip{ background-position: -273px -1548px; width: 223px; height: 132px; } 
+.sprite-HoboAnim_08B{ background-position: -273px -1730px; width: 223px; height: 64px; } 
+.sprite-HoboAnim_08BFlip{ background-position: -273px -1844px; width: 223px; height: 64px; } 
+.sprite-HoboAnim_09A{ background-position: -546px 0; width: 223px; height: 132px; } 
+.sprite-HoboAnim_09AFlip{ background-position: -546px -182px; width: 223px; height: 132px; } 
+.sprite-HoboAnim_09B{ background-position: -546px -364px; width: 223px; height: 64px; } 
+.sprite-HoboAnim_09BFlip{ background-position: -546px -478px; width: 223px; height: 64px; } 
+.sprite-HoboAnim_10A{ background-position: -546px -592px; width: 227px; height: 64px; } 
+.sprite-HoboAnim_10AFlip{ background-position: -546px -706px; width: 227px; height: 64px; } 
+.sprite-HoboAnim_10B{ background-position: -546px -820px; width: 255px; height: 64px; } 
+.sprite-HoboAnim_10BFlip{ background-position: -546px -934px; width: 255px; height: 64px; } 
+.sprite-HoboAnim_11B{ background-position: -546px -1048px; width: 187px; height: 94px; } 
+.sprite-HoboAnim_11BFlip{ background-position: -546px -1192px; width: 187px; height: 94px; } 
+.sprite-HoboAnim_12B{ background-position: -546px -1336px; width: 187px; height: 94px; } 
+.sprite-HoboAnim_12BFlip{ background-position: -546px -1480px; width: 187px; height: 94px; } 
+.sprite-HoboAnim_13B{ background-position: -546px -1624px; width: 187px; height: 94px; } 
+.sprite-HoboAnim_13BFlip{ background-position: -546px -1768px; width: 187px; height: 94px; } 
+.sprite-HoboAnim_14B{ background-position: -546px -1912px; width: 187px; height: 94px; } 
+.sprite-HoboAnim_14BFlip{ background-position: -851px 0; width: 187px; height: 94px; } 
+.sprite-HoboAnim_23B{ background-position: -851px -144px; width: 63px; height: 66px; } 
+.sprite-HoboAnim_23BFlip{ background-position: -851px -260px; width: 63px; height: 66px; } 
+.sprite-HoboAnim_24B{ background-position: -851px -376px; width: 63px; height: 66px; } 
+.sprite-HoboAnim_24BFlip{ background-position: -851px -492px; width: 63px; height: 66px; } 
