@@ -104,9 +104,9 @@ var GameEngine = Class.extend({
             gInputEngine.setup();
          }
 
-
          createjs.Sound.registerSound("sound/bomb.mp3|sound/bomb.ogg", "bomb");
-         createjs.Sound.registerSound("sound/punch.mp3", "punch");
+         createjs.Sound.registerSound("sound/punch.mp3|sound/punch.wav", "punch");
+         createjs.Sound.registerSound("sound/scream.wav", "scream");
 
       },
 
