@@ -40,10 +40,12 @@ var Player = Entity.extend({
 			frames: { width: this.size.w, height: this.size.h, count:6 },
 			animations: {
 				idle: [0, 0, 'idle'],
-				//down: [0, 3, 'down', 10],
 				left: [4, 5, 'left', 10],
-				//up: [8, 11, 'up', 10],
 				right: [0, 1, 'right', 10],
+				shoot_right: [2, 2, 'shoot_right'],
+				shoot_left: [3, 3, 'shoot_left'],
+				punch_right: [0, 1, 'punch_right', 10], // TODO: need updated sprite from Dave w/ Punch frames
+				punch_left: [4, 5, 'punch_left', 10]
 				//dead: [16, 16, 'dead', 10]
 			}
 		});
@@ -87,7 +89,7 @@ var Player = Entity.extend({
 		this.body.CreateFixture(fixDef);
 
 		// assign actor
-		var actor = gGameEngine.actorObject(that.body, skin, { x: 25, y:33 });
+		var actor = gGameEngine.actorObject(that.body, skin, { x: 28, y:33 });
 
 		this.body.SetUserData(actor);  // set the actor as user data of the body so we can use it later: body.GetUserData()
 		//gGameEngine.bodies.push(that.body);
@@ -107,43 +109,43 @@ var Player = Entity.extend({
             // position.y -= this.velocity;
             // dirY = -1;
             //that.body.SetLinearVelocity(new b2Vec2(that.vecX, 500));
-
         } else if (gInputEngine.actions[this.controls.down]) {
             this.animate('down');
             // position.y += this.velocity;
             // dirY = 1;
             // that.body.SetLinearVelocity(new b2Vec2(0,0));
-
         } else if (gInputEngine.actions[this.controls.left]) {
             this.animate('left');
 			this.isStopped = false;
-            //position.x -= this.velocity;
-            //dirX = -1;
+            dirX = -1;
             that.vecX = -4;
             that.body.SetLinearVelocity(new b2Vec2(that.vecX,0));
-
         } else if (gInputEngine.actions[this.controls.right]) {
             this.animate('right');
 			this.isStopped = false;
-            //position.x += this.velocity;
-            //dirX = 1;
+            dirX = 1;
             that.vecX = 4;
             that.body.SetLinearVelocity(new b2Vec2(that.vecX,0));
-
         } else if (gInputEngine.actions[this.controls.shoot]) {
-            //this.animate('right');
-            //position.x += this.velocity;
-            //dirX = 1;
-            that.vecX = -1;
+			if(dirX > 0) {
+				this.animate('shoot_right');
+				that.vecX = -1;
+			} else {
+				this.animate('shoot_left');
+				that.vecX = 1;
+			}
+			this.isStopped = false;
             that.body.SetLinearVelocity(new b2Vec2(that.vecX,0));
-
-        } else if (gInputEngine.actions[this.controls.punch]) {
-            //this.animate('right');
-            //position.x += this.velocity;
-            //dirX = 1;
-            that.vecX = 1;
+		} else if (gInputEngine.actions[this.controls.punch]) {
+			if(dirX > 0) {
+				this.animate('punch_right');
+				that.vecX = -1;
+			} else {
+				this.animate('punch_left');
+				that.vecX = 1;
+			}
+			this.isStopped = false;
             that.body.SetLinearVelocity(new b2Vec2(that.vecX,0));
-
         } else {
             this.bmp.stop();
             that.body.SetLinearVelocity(new b2Vec2(0,0));
