@@ -161,6 +161,7 @@ var GameEngine = Class.extend({
 
 			   this.zombieKills++;
 			   document.getElementById('scoreSpan').innerHTML = this.zombieKills;
+            createjs.Sound.play("scream");
             }
         }
       },
