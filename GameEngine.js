@@ -194,6 +194,11 @@ var GameEngine = Class.extend({
       },
       
       tick : function(dt, paused){
+            // update active actors
+         for(var i=0, l=this.actors.length; i<l; i++) {
+            this.actors[i].update();
+         }
+
          //console.log('update', arguments, this);
          this.world.Step(
                1 / 60   //frame-rate
