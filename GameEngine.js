@@ -36,7 +36,7 @@ var GameEngine = Class.extend({
 
          var that = this;
 
-         this.playerImg = "images/betty.png";
+         this.playerImg = "image/betty.png";
 
          
          this.world = new b2World(
@@ -89,8 +89,10 @@ var GameEngine = Class.extend({
             this.startLoop();
          }
 
-         this.addBall(10, 10);
+         //this.addBall(10, 10);
          //this.addPlayer(50, 10, 1);
+
+         gGameEngine.addPlayer(20,20,1)
 
          if (!gInputEngine.bindings.length) {
             gInputEngine.setup();
@@ -107,7 +109,7 @@ var GameEngine = Class.extend({
 
       addPlayer: function(x, y, id)
       {
-         debugger;
+         //debugger;
          var player = new factory["Player"]({x:x,y:y}, id);
          this.players.push(player);
          return player;
@@ -147,8 +149,9 @@ var GameEngine = Class.extend({
             update: function()// translate box2d positions to pixels
             {
                actor.skin.rotation = actor.body.GetAngle() * (180 / Math.PI);
-               actor.skin.x = actor.body.GetWorldCenter().x * that.scale;
-               actor.skin.y = actor.body.GetWorldCenter().y * that.scale;
+               actor.skin.x = actor.body.GetWorldCenter().x * that.scale - 10;
+               actor.skin.y = actor.body.GetWorldCenter().y * that.scale - 15 ;
+               //console.log();
             }
          };
 
