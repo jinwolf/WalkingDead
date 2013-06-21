@@ -9,7 +9,13 @@
          <script type="text/javascript" src="game.js"></script>
          <script type="text/javascript" src="GameEngine.js"></script>
    </head>
-   <body onload="gGameEngine.init();">
-      <canvas id="canvas"></canvas>
+   <body>
+      <canvas id="canvas">
+      </canvas>
+
+      <script type="text/javascript">
+         console.log('a');
+         gGameEngine.init();
+      </script>
    </body>
 </html>

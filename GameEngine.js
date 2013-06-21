@@ -7,6 +7,8 @@ var GameEngine = Class.extend({
       world : null,
       
       init: function() {
+         console.log('init');
+
          var that = this;
          var   b2Vec2 = Box2D.Common.Math.b2Vec2
          	,	b2BodyDef = Box2D.Dynamics.b2BodyDef
@@ -62,17 +64,26 @@ var GameEngine = Class.extend({
 
          //setup debug draw
          var debugDraw = new b2DebugDraw();
-			debugDraw.SetSprite(document.getElementById("canvas").getContext("2d"));
-			debugDraw.SetDrawScale(0.5);
-			debugDraw.SetFillAlpha(0.3);
-			debugDraw.SetLineThickness(2.0);
-			debugDraw.SetFlags(b2DebugDraw.e_shapeBit | b2DebugDraw.e_jointBit);
-			world.SetDebugDraw(debugDraw);
-         
-         window.setInterval(this.update, 1000 / 60);
+
+         var canvas = document.getElementById("canvas");
+         var context = null;
+         if(canvas)
+         {
+            context = canvas.getContext("2d");
+            console.log(context);
+
+            debugDraw.SetSprite(context);
+            debugDraw.SetDrawScale(0.5);
+            debugDraw.SetFillAlpha(0.3);
+            debugDraw.SetLineThickness(2.0);
+            debugDraw.SetFlags(b2DebugDraw.e_shapeBit | b2DebugDraw.e_jointBit);
+            world.SetDebugDraw(debugDraw);
+            window.setInterval(this.update, 1000 / 60);
+         }
       },
       
       update : function() {
+         //console.log('update');
          this.world.Step(
                1 / 60   //frame-rate
             ,  10       //velocity iterations
