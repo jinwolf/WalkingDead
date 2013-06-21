@@ -3,12 +3,16 @@ var GameEngine = Class.extend({
       canvasWidth : 900,
       k : 60,
 
+      canvas:null,
+      context:null,
+      stage:null,
 
       world : null,
       scale : 15,
       
       init: function() {
          console.log('init', this.scale);
+
 
          var that = this;
          var   b2Vec2 = Box2D.Common.Math.b2Vec2
@@ -23,7 +27,7 @@ var GameEngine = Class.extend({
          	,	b2DebugDraw = Box2D.Dynamics.b2DebugDraw
             ;
          
-         world = new b2World(
+         this.world = new b2World(
                new b2Vec2(0, 150)    //gravity
             ,  true                 //allow sleep
          );
@@ -41,7 +45,7 @@ var GameEngine = Class.extend({
          bodyDef.position.y = 145/that.scale;
          fixDef.shape = new b2PolygonShape;
          fixDef.shape.SetAsBox(150/that.scale, 5/that.scale);
-         world.CreateBody(bodyDef).CreateFixture(fixDef);
+         this.world.CreateBody(bodyDef).CreateFixture(fixDef);
          
          //create some objects
 /*         bodyDef.type = b2Body.b2_dynamicBody;
@@ -66,36 +70,99 @@ var GameEngine = Class.extend({
          //setup debug draw
          var debugDraw = new b2DebugDraw();
 
-         var canvas = document.getElementById("canvas");
-         var context = null;
-         if(canvas)
+         this.canvas = document.getElementById("canvas");
+         this.context = null;
+         if(this.canvas)
          {
-            context = canvas.getContext("2d");
-            console.log(context);
+            this.context = canvas.getContext("2d");
+            this.stage = new createjs.Stage(canvas);
+            this.stage.snapPixelsEnabled = true;
+            console.log(this.context);
 
-            debugDraw.SetSprite(context);
+            debugDraw.SetSprite(that.context);
             debugDraw.SetDrawScale(that.scale);
             debugDraw.SetFillAlpha(0.3);
-            debugDraw.SetLineThickness(2.0);
+            debugDraw.SetLineThickness(1.0);
             debugDraw.SetFlags(b2DebugDraw.e_shapeBit | b2DebugDraw.e_jointBit);
 
-            world.SetDebugDraw(debugDraw);
-            window.setInterval(this.update, 1000 / 60);
+            this.world.SetDebugDraw(debugDraw);
+
+            // window.setInterval(function(){
+            //    that.update(that);
+            //    //console.log(that);
+
+            // }, 1000 / 60);
+
+            this.startLoop();
          }
 
       },
+
+      startLoop: function()
+      {
+         var that = this;
+         createjs.Ticker.setFPS(30);
+         createjs.Ticker.useRAF = true;
+         createjs.Ticker.addListener(that);  // looks for "tick" function within the luxanimals.demo object
+      },
       
-      update : function() {
-         //console.log('update');
+      tick : function(dt, paused){
+         //console.log('update', arguments, this);
          this.world.Step(
                1 / 60   //frame-rate
             ,  10       //velocity iterations
             ,  10       //position iterations
          );
-         world.DrawDebugData();
-         world.ClearForces();
+         this.world.DrawDebugData();
+         this.world.ClearForces();
       }
 
    });
 
 var gGameEngine = new GameEngine();
+
+
+
+var birds = (function() {
+
+      var spawn = function() {
+         var birdBMP = new createjs.Bitmap("image/bird.png");
+         //birdBMP.x = Math.round(Math.random()*500);
+         birdBMP.x = Math.round(Math.random()*200);
+         birdBMP.y = 30;
+         birdBMP.regX = 25;   // important to set origin point to center of your bitmap
+         birdBMP.regY = 25; 
+         birdBMP.snapToPixel = true;
+         birdBMP.mouseEnabled = false;
+         gGameEngine.stage.addChild(birdBMP);
+         //box2d.createBird(birdBMP);
+      }
+
+      return {
+         spawn: spawn
+      }
+   })();
+
+
+
+      // var ticker = function() {
+      //    createjs.Ticker.setFPS(30);
+      //    createjs.Ticker.useRAF = true;
+      //    createjs.Ticker.addListener(obj);  // looks for "tick" function within the luxanimals.demo object
+      // }
+
+
+      // var obj = 
+      // {
+      //    tick: function()
+      //    {
+      //       //console.log('tick', arguments);
+      //       //birds.spawn();
+      //       gGameEngine.update(gGameEngine);
+      //       gGameEngine.stage.update();
+            
+      //    }
+      // }
+
+
+
