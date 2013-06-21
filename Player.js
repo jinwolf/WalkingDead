@@ -87,7 +87,7 @@ var Player = Entity.extend({
 		this.body.CreateFixture(fixDef);
 
 		// assign actor
-		var actor = gGameEngine.actorObject(that.body, skin);
+		var actor = gGameEngine.actorObject(that.body, skin, { x: 25, y:33 });
 
 		this.body.SetUserData(actor);  // set the actor as user data of the body so we can use it later: body.GetUserData()
 		//gGameEngine.bodies.push(that.body);
@@ -101,7 +101,7 @@ var Player = Entity.extend({
         }
 
         var that = this;
-        this.isStopped = false;
+        
         if (gInputEngine.actions[this.controls.up]) {
             this.animate('up');
             // position.y -= this.velocity;
@@ -116,6 +116,7 @@ var Player = Entity.extend({
 
         } else if (gInputEngine.actions[this.controls.left]) {
             this.animate('left');
+			this.isStopped = false;
             //position.x -= this.velocity;
             //dirX = -1;
             that.vecX = -4;
@@ -123,6 +124,7 @@ var Player = Entity.extend({
 
         } else if (gInputEngine.actions[this.controls.right]) {
             this.animate('right');
+			this.isStopped = false;
             //position.x += this.velocity;
             //dirX = 1;
             that.vecX = 4;
