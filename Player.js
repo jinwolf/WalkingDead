@@ -143,6 +143,12 @@ var Player = Entity.extend({
 				this.animate('shoot_left');
 				that.vecX = 1;
 			}
+
+			if(!this.isShooting)
+			{
+				createjs.Sound.play("bomb");
+			}
+
 			this.isStopped = false;
 			this.isShooting = true;
 			this.isPunching = false;

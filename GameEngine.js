@@ -103,6 +103,10 @@ var GameEngine = Class.extend({
          if (!gInputEngine.bindings.length) {
             gInputEngine.setup();
          }
+
+
+         createjs.Sound.registerSound("sound/bomb.mp3|sound/bomb.ogg", "bomb");
+
       },
 
     removeBody: function (obj) {
