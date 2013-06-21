@@ -1,7 +1,3 @@
-
-
-
-
    var factory = {};
 
    var EntityClass = Class.extend({
