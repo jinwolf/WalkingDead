@@ -161,6 +161,12 @@ var Player = Entity.extend({
 				this.animate('punch_left');
 				that.vecX = 1;
 			}
+
+			if(!this.isPunching)
+			{
+				createjs.Sound.play("punch");
+			}
+
 			this.isStopped = false;
 			this.isShooting = false;
 			this.isPunching = true;

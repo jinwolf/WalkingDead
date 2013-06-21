@@ -106,6 +106,7 @@ var GameEngine = Class.extend({
 
 
          createjs.Sound.registerSound("sound/bomb.mp3|sound/bomb.ogg", "bomb");
+         createjs.Sound.registerSound("sound/punch.mp3", "punch");
 
       },
 
@@ -155,7 +156,7 @@ var GameEngine = Class.extend({
             {
                this.removeBody(this.zombies[i].body);
                this.zombies.splice(i, 1);
-               console.log(this.zombies.length);
+               //console.log(this.zombies.length);
             }
         }
       },
