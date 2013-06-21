@@ -1,3 +1,16 @@
+         var   b2Vec2 = Box2D.Common.Math.b2Vec2
+            ,  b2BodyDef = Box2D.Dynamics.b2BodyDef
+            ,  b2Body = Box2D.Dynamics.b2Body
+            ,  b2FixtureDef = Box2D.Dynamics.b2FixtureDef
+            ,  b2Fixture = Box2D.Dynamics.b2Fixture
+            ,  b2World = Box2D.Dynamics.b2World
+            ,  b2MassData = Box2D.Collision.Shapes.b2MassData
+            ,  b2PolygonShape = Box2D.Collision.Shapes.b2PolygonShape
+            ,  b2CircleShape = Box2D.Collision.Shapes.b2CircleShape
+            ,  b2DebugDraw = Box2D.Dynamics.b2DebugDraw
+            ;
+
+
 var factory = {};
 
 Entity = Class.extend({
@@ -62,8 +75,52 @@ factory['Player'] = Player;
 
 
 var Ball = Entity.extend({
-   init: function(x,y,radius)
+   init: function(x,y,imgSrc)
    {
+      console.log(arguments);
+         //var skinBMP = new createjs.Bitmap("image/bird.png");
+         var skinBMP = new createjs.Bitmap(imgSrc);
+         //skinBMP.x = Math.round(Math.random()*500);
+         skinBMP.x = x;
+         skinBMP.y = y;
+         skinBMP.regX = 25;   // important to set origin point to center of your bitmap
+         skinBMP.regY = 25; 
+         skinBMP.snapToPixel = true;
+         skinBMP.mouseEnabled = false;
 
+         skinBMP.rotation = 90;
+
+         skinBMP.scaleX = 0.5;
+         skinBMP.scaleY = 0.5;
+
+         gGameEngine.stage.addChild(skinBMP);
+         
+         //gGameEngine.createBall(skinBMP);
+         this.createObj(skinBMP);
+   },
+
+   createObj: function(skin)
+   {
+               //create a ball
+         var fixDef = new b2FixtureDef;
+         fixDef.density = 1.0;
+         fixDef.friction = 0.5;
+         fixDef.restitution = 1;
+
+         var bodyDef = new b2BodyDef;
+         bodyDef.type = b2Body.b2_dynamicBody;
+         bodyDef.position.x = skin.x/gGameEngine.scale;
+         bodyDef.position.y = skin.y/gGameEngine.scale;
+         fixDef.shape = new b2CircleShape(10/gGameEngine.scale);
+
+         var body = gGameEngine.world.CreateBody(bodyDef);
+         body.CreateFixture(fixDef);
+
+         // assign actor
+         var actor = gGameEngine.actorObject(body, skin);
+         body.SetUserData(actor);  // set the actor as user data of the body so we can use it later: body.GetUserData()
+         gGameEngine.bodies.push(body);
    }
 });
+
+factory['Ball'] = Ball;

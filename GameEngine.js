@@ -1,16 +1,3 @@
-         var   b2Vec2 = Box2D.Common.Math.b2Vec2
-            ,  b2BodyDef = Box2D.Dynamics.b2BodyDef
-            ,  b2Body = Box2D.Dynamics.b2Body
-            ,  b2FixtureDef = Box2D.Dynamics.b2FixtureDef
-            ,  b2Fixture = Box2D.Dynamics.b2Fixture
-            ,  b2World = Box2D.Dynamics.b2World
-            ,  b2MassData = Box2D.Collision.Shapes.b2MassData
-            ,  b2PolygonShape = Box2D.Collision.Shapes.b2PolygonShape
-            ,  b2CircleShape = Box2D.Collision.Shapes.b2CircleShape
-            ,  b2DebugDraw = Box2D.Dynamics.b2DebugDraw
-            ;
-
-
 
 var GameEngine = Class.extend({
       canvasHeight : 386,
@@ -30,6 +17,8 @@ var GameEngine = Class.extend({
 
       actors: [],
       bodies: [],
+
+      balls:[],
       
       init: function() {
          console.log('init', this.scale);
@@ -57,48 +46,6 @@ var GameEngine = Class.extend({
          fixDef.shape = new b2PolygonShape;
          fixDef.shape.SetAsBox(150/that.scale, 5/that.scale);
          this.world.CreateBody(bodyDef).CreateFixture(fixDef);
-
-
-         //create some objects
-/*         bodyDef.type = b2Body.b2_dynamicBody;
-         for(var i = 0; i < 10; ++i) {
-            if(Math.random()*k > 0.5) {
-               fixDef.shape = new b2PolygonShape;
-               fixDef.shape.SetAsBox(
-                     Math.random()*k + 0.1 //half width
-                  ,  Math.random()*k + 0.1 //half height
-               );
-            } else {
-               fixDef.shape = new b2CircleShape(
-                  Math.random()*k + 0.1 //radius
-               );
-            }
-            bodyDef.position.x = Math.random()*k * 10;
-            bodyDef.position.y = Math.random()*k * 10;
-            world.CreateBody(bodyDef).CreateFixture(fixDef);
-         }*/
-
-
-         // bodyDef.type = b2Body.b2_dynamicBody;
-         // for(var i = 0; i < 10; ++i) {
-         //    var random = Math.random();
-         //    console.log(random, that.k);
-         //    if(random*that.k > 0.5) {
-         //       fixDef.shape = new b2PolygonShape;
-         //       fixDef.shape.SetAsBox(
-         //             Math.random()*that.k + 0.1 //half width
-         //          ,  Math.random()*that.k + 0.1 //half height
-         //       );
-         //    } else {
-         //       fixDef.shape = new b2CircleShape(
-         //          Math.random()*that.k + 0.1 //radius
-         //       );
-         //    }
-         //    bodyDef.position.x = Math.random()*that.k * 10;
-         //    bodyDef.position.y = Math.random()*that.k * 10;
-         //    this.world.CreateBody(bodyDef).CreateFixture(fixDef);
-         // }
-
 
 
          //setup debug draw
@@ -129,6 +76,13 @@ var GameEngine = Class.extend({
             // starts the game loop
             this.startLoop();
          }
+
+      },
+
+      addBall: function(x,y)
+      {
+         //debugger;
+         var ball = new factory["Ball"](x,y,"image/bird.png");
 
       },
 
