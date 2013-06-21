@@ -13,6 +13,8 @@ var GameEngine = Class.extend({
 
       world : null,
       scale : 15,
+
+      actors: [],
       
       init: function() {
          console.log('init', this.scale);
@@ -50,6 +52,18 @@ var GameEngine = Class.extend({
          fixDef.shape = new b2PolygonShape;
          fixDef.shape.SetAsBox(150/that.scale, 5/that.scale);
          this.world.CreateBody(bodyDef).CreateFixture(fixDef);
+
+
+         //create a ball
+         fixDef.density = 1.0;
+         fixDef.friction = 0.5;
+         fixDef.restitution = 1;
+
+         bodyDef.type = b2Body.b2_dynamicBody;
+         bodyDef.position.x = 150/that.scale;
+         bodyDef.position.y = 45/that.scale;
+         fixDef.shape = new b2CircleShape(10/that.scale);
+         this.world.CreateBody(bodyDef).CreateFixture(fixDef);
          
          //create some objects
 /*         bodyDef.type = b2Body.b2_dynamicBody;
@@ -69,6 +83,28 @@ var GameEngine = Class.extend({
             bodyDef.position.y = Math.random()*k * 10;
             world.CreateBody(bodyDef).CreateFixture(fixDef);
          }*/
+
+
+         // bodyDef.type = b2Body.b2_dynamicBody;
+         // for(var i = 0; i < 10; ++i) {
+         //    var random = Math.random();
+         //    console.log(random, that.k);
+         //    if(random*that.k > 0.5) {
+         //       fixDef.shape = new b2PolygonShape;
+         //       fixDef.shape.SetAsBox(
+         //             Math.random()*that.k + 0.1 //half width
+         //          ,  Math.random()*that.k + 0.1 //half height
+         //       );
+         //    } else {
+         //       fixDef.shape = new b2CircleShape(
+         //          Math.random()*that.k + 0.1 //radius
+         //       );
+         //    }
+         //    bodyDef.position.x = Math.random()*that.k * 10;
+         //    bodyDef.position.y = Math.random()*that.k * 10;
+         //    this.world.CreateBody(bodyDef).CreateFixture(fixDef);
+         // }
+
 
 
          //setup debug draw
@@ -100,6 +136,22 @@ var GameEngine = Class.extend({
             this.startLoop();
          }
 
+      },
+
+      actorObject : function(body, skin) {
+         var that = this;
+         
+         var actor = 
+         {
+            body: body,
+            skin: skin
+         }
+         this.update = function() {  // translate box2d positions to pixels
+            actor.skin.rotation = actor.body.GetAngle() * (180 / Math.PI);
+            actor.skin.x = actor.body.GetWorldCenter().x * that.scale;
+            actor.skin.y = actor.body.GetWorldCenter().y * that.scale;
+         }
+         this.actors.push(actor);
       },
 
       startLoop: function()

@@ -56,3 +56,14 @@ var Player = Entity.extend({
 });
 
 factory['Player'] = Player;
+
+
+
+
+
+var Ball = Entity.extend({
+   init: function(x,y,radius)
+   {
+
+   }
+});
