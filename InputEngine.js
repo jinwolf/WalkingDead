@@ -17,22 +17,22 @@ InputEngine = Class.extend({
     },
 
     setup: function () {
-        this.bind(38, 'up');
-        this.bind(37, 'left');
-        this.bind(40, 'down');
-        this.bind(39, 'right');
-        this.bind(32, 'bomb');
-        this.bind(18, 'bomb');
+        this.bind(38, 'up');    // up arrow
+        this.bind(37, 'left');  // left arrow
+        this.bind(40, 'down');  // down arrow
+        this.bind(39, 'right'); // right arrow
+        // this.bind(32, 'bomb');
+        // this.bind(18, 'bomb');
 
-        this.bind(87, 'up2');
-        this.bind(65, 'left2');
-        this.bind(83, 'down2');
-        this.bind(68, 'right2');
-        this.bind(16, 'bomb2');
+        // this.bind(87, 'up2');
+        this.bind(65, 'shoot'); // 'A' key (shoot)
+        this.bind(83, 'punch'); // 'S' key (punch)
+        // this.bind(68, 'right2');
+        // this.bind(16, 'bomb2');
 
-        this.bind(13, 'restart');
-        this.bind(27, 'escape');
-        this.bind(77, 'mute');
+        // this.bind(13, 'restart');
+        // this.bind(27, 'escape');
+        // this.bind(77, 'mute');
 
         document.addEventListener('keydown', this.onKeyDown);
         document.addEventListener('keyup', this.onKeyUp);
