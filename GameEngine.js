@@ -29,6 +29,7 @@ var GameEngine = Class.extend({
       scale : 15,
 
       actors: [],
+      bodies: [],
       
       init: function() {
          console.log('init', this.scale);
@@ -144,23 +145,41 @@ var GameEngine = Class.extend({
          bodyDef.position.x = skin.x/that.scale;
          bodyDef.position.y = skin.y/that.scale;
          fixDef.shape = new b2CircleShape(10/that.scale);
-         this.world.CreateBody(bodyDef).CreateFixture(fixDef);
+
+         var body = this.world.CreateBody(bodyDef);
+         body.CreateFixture(fixDef);
+
+         // assign actor
+         var actor = this.actorObject(body, skin);
+         body.SetUserData(actor);  // set the actor as user data of the body so we can use it later: body.GetUserData()
+         this.bodies.push(body);
       },
 
       actorObject : function(body, skin) {
+         
          var that = this;
 
          var actor = 
          {
             body: body,
-            skin: skin
-         }
-         this.update = function() {  // translate box2d positions to pixels
-            actor.skin.rotation = actor.body.GetAngle() * (180 / Math.PI);
-            actor.skin.x = actor.body.GetWorldCenter().x * that.scale;
-            actor.skin.y = actor.body.GetWorldCenter().y * that.scale;
-         }
-         this.actors.push(actor);
+            skin: skin,
+            update: function()// translate box2d positions to pixels
+            {
+               actor.skin.rotation = actor.body.GetAngle() * (180 / Math.PI);
+               actor.skin.x = actor.body.GetWorldCenter().x * that.scale;
+               actor.skin.y = actor.body.GetWorldCenter().y * that.scale;
+            }
+         };
+
+         // this.update = function() {  // translate box2d positions to pixels
+         //    actor.skin.rotation = actor.body.GetAngle() * (180 / Math.PI);
+         //    actor.skin.x = actor.body.GetWorldCenter().x * that.scale;
+         //    actor.skin.y = actor.body.GetWorldCenter().y * that.scale;
+         // }
+
+         that.actors.push(actor);
+
+         return actor;
       },
 
       startLoop: function()
@@ -211,6 +230,7 @@ var birds = (function() {
          birdBMP.scaleY = 0.5;
 
          gGameEngine.stage.addChild(birdBMP);
+         gGameEngine.createBall(birdBMP);
          //box2d.createBird(birdBMP);
       }
 
