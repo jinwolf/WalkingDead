@@ -24,6 +24,9 @@ var Player = Entity.extend({
 	*/
     bmp: null,
     body: null,
+    direction: "",
+    isShooting: false,
+    isPunching: false,
 
 	init: function(position, id) {
 		var img = gGameEngine.playerImg;
@@ -120,14 +123,20 @@ var Player = Entity.extend({
             dirX = -1;
             that.vecX = -4;
             that.body.SetLinearVelocity(new b2Vec2(that.vecX,0));
+            that.direction = "left";
+            this.isShooting = false;
+			this.isPunching = false;
         } else if (gInputEngine.actions[this.controls.right]) {
             this.animate('right');
 			this.isStopped = false;
             dirX = 1;
             that.vecX = 4;
             that.body.SetLinearVelocity(new b2Vec2(that.vecX,0));
+            that.direction = "right";
+            this.isShooting = false;
+			this.isPunching = false;
         } else if (gInputEngine.actions[this.controls.shoot]) {
-			if(dirX > 0) {
+			if(dirX && dirX > 0) {
 				this.animate('shoot_right');
 				that.vecX = -1;
 			} else {
@@ -135,9 +144,11 @@ var Player = Entity.extend({
 				that.vecX = 1;
 			}
 			this.isStopped = false;
+			this.isShooting = true;
+			this.isPunching = false;
             that.body.SetLinearVelocity(new b2Vec2(that.vecX,0));
 		} else if (gInputEngine.actions[this.controls.punch]) {
-			if(dirX > 0) {
+			if(dirX && dirX > 0) {
 				this.animate('punch_right');
 				that.vecX = -1;
 			} else {
@@ -145,11 +156,15 @@ var Player = Entity.extend({
 				that.vecX = 1;
 			}
 			this.isStopped = false;
+			this.isShooting = false;
+			this.isPunching = true;
             that.body.SetLinearVelocity(new b2Vec2(that.vecX,0));
         } else {
             this.bmp.stop();
             that.body.SetLinearVelocity(new b2Vec2(0,0));
             that.isStopped = true;
+            this.isShooting = false;
+			this.isPunching = false;
         }
     },
 

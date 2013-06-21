@@ -18,7 +18,7 @@ Bot = Player.extend({
     alive: true,
 
     isStopped: false,
-
+    id: null,
         /**
 * Bitmap animation
 */
@@ -27,7 +27,7 @@ Bot = Player.extend({
     body: null,
 
    init: function(position, id, imgSrc) {
-           var img = imgSrc;
+       var img = imgSrc;
 
       if (id) {
          this.id = id;
@@ -42,7 +42,8 @@ Bot = Player.extend({
              left: [0, 1, 'left', 10],
              //up: [8, 11, 'up', 10],
              right: [4, 5, 'right', 10],
-             //dead: [16, 16, 'dead', 10]
+             dead_left: [2, 3, false, 10],
+             dead_right: [6, 7, false, 10]
          }
       });
       this.bmp = new createjs.BitmapAnimation(spriteSheet);
@@ -95,17 +96,10 @@ Bot = Player.extend({
 
 
       update: function() {
-        if (!this.alive) {
-            //this.fade();
-            return;
-        }
 
         var playerX = gGameEngine.players[0].body.GetPosition().x;
         var botX = this.body.GetPosition().x;
         var botY = this.body.GetPosition().y;
-
-        
-
 
         var direction = "";
         if(playerX < botX)
@@ -121,6 +115,21 @@ Bot = Player.extend({
         {
             direction = "";
         }
+
+
+// DEAD Check
+        if (!this.alive) {
+            //console.log("dead zombie", this.id);
+            //this.alive = true;
+            //this.fade();
+            this.animate('dead_'+direction);
+            this.isStopped = false;
+            this.body.SetLinearVelocity(new b2Vec2(0,0));
+            this.fade();
+            return;
+        }
+
+
 
         var speed = 2;
         var that = this;
@@ -206,6 +215,15 @@ Bot = Player.extend({
            if (!this.bmp.currentAnimation || this.bmp.currentAnimation.indexOf(animation) === -1 || this.isStopped) {
                this.bmp.gotoAndPlay(animation);
            }
+       },
+
+       fade: function()
+       {
+            var that = this;
+            
+            setTimeout(function(){
+                gGameEngine.removeZombie(that.id)
+            }, 1000);
        }
 });
 

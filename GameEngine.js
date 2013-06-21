@@ -22,9 +22,9 @@ var GameEngine = Class.extend({
 
       players: [],
       zombies: [],
-      zombieSprites: ['image/einstein-zombie.png', 'image/einstein-zombie.png'],
+      zombieSprites: ['image/einstein-zombie.png', 'image/shakespeare-zombie.png'],
       maxNumberOfZombies: 2,
-      currentZombieId: 0,
+      currentZombieId: 1,
 
       playerImg: null,
       
@@ -105,7 +105,19 @@ var GameEngine = Class.extend({
          }
       },
 
+    removeBody: function (obj) {
+        //console.log(obj, obj.GetUserData());
+        this.removeActor(obj.GetUserData());
+        obj.SetUserData(null);
+        this.world.DestroyBody(obj);
+    },
 
+      // remove actor and it's skin object
+      removeActor : function(actor) {
+         this.stage.removeChild(actor.skin);
+         this.actors.splice(this.actors.indexOf(actor),1);
+         //console.log(this.actors);
+      },
 
       addBall: function(x,y)
       {
@@ -125,9 +137,23 @@ var GameEngine = Class.extend({
 
       addZombie: function(x,y,id, imgSrc)
       {
+         //console.log(id);
          var zombie = new factory["Bot"]({x:x,y:y}, id, imgSrc);
          this.zombies.push(zombie);
          return zombie;
+      },
+
+      removeZombie: function(id)
+      {
+        // Zombies
+        for (var i = 0; i < this.zombies.length; i++) {
+            if(this.zombies[i].id == id)
+            {
+               this.removeBody(this.zombies[i].body);
+               this.zombies.splice(i, 1);
+               console.log(this.zombies.length);
+            }
+        }
       },
 
       actorObject : function(body, skin, delta) {
@@ -168,23 +194,52 @@ var GameEngine = Class.extend({
       },
       
       tick : function(dt, paused){
+         var playerObj = this.players[0];
 
          if(gGameEngine.zombies && gGameEngine.zombies.length < 2)
          {
-            var playerX = this.players[0].body.GetPosition().x;
+            var playerX = playerObj.body.GetPosition().x;
             var scaledPlayerX = playerX * this.scale;
 
             var rnd = Math.random();
-            var choice = Math.round(rnd);
+            
             var scaledZombieX = rnd*300;
 
             if(Math.abs(scaledPlayerX-scaledZombieX) > 100)
             {
                //console.log(scaledPlayerX, scaledZombieX);
-
+              var choice = Math.round(Math.random());
               gGameEngine.addZombie(scaledZombieX, 20, this.currentZombieId++, this.zombieSprites[choice]); 
             }
          }
+
+         if(playerObj.isShooting)
+         {
+            var shootingDistance = 7;
+            //console.log("shooting");
+            var playerX = playerObj.body.GetPosition().x;
+            var min, max;
+            if(playerObj.direction == "left")
+            {
+               min = playerX - shootingDistance;
+               max = playerX;
+            }
+            else if(playerObj.direction == "right")
+            {
+               min = playerX;
+               max = playerX + shootingDistance;
+            }
+
+            for (var i = 0; i < gGameEngine.zombies.length; i++) {
+               var zombie = gGameEngine.zombies[i];
+               var zombieX = zombie.body.GetPosition().x;
+               if( zombieX > min && zombieX < max )
+               {
+                  zombie.alive = false;
+               }
+            }
+         }
+
 
 
         // Balls
