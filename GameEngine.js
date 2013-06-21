@@ -140,6 +140,12 @@ var birds = (function() {
          birdBMP.regY = 25; 
          birdBMP.snapToPixel = true;
          birdBMP.mouseEnabled = false;
+
+         birdBMP.rotation = 90;
+
+         birdBMP.scaleX = 0.5;
+         birdBMP.scaleY = 0.5;
+
          gGameEngine.stage.addChild(birdBMP);
          //box2d.createBird(birdBMP);
       }
@@ -148,27 +154,3 @@ var birds = (function() {
          spawn: spawn
       }
    })();
-
-
-
-      // var ticker = function() {
-      //    createjs.Ticker.setFPS(30);
-      //    createjs.Ticker.useRAF = true;
-      //    createjs.Ticker.addListener(obj);  // looks for "tick" function within the luxanimals.demo object
-      // }
-
-
-      // var obj = 
-      // {
-      //    tick: function()
-      //    {
-      //       //console.log('tick', arguments);
-      //       //birds.spawn();
-      //       gGameEngine.update(gGameEngine);
-      //       gGameEngine.stage.update();
-            
-      //    }
-      // }
-
-
-
