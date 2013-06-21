@@ -1,3 +1,17 @@
+         var   b2Vec2 = Box2D.Common.Math.b2Vec2
+            ,  b2BodyDef = Box2D.Dynamics.b2BodyDef
+            ,  b2Body = Box2D.Dynamics.b2Body
+            ,  b2FixtureDef = Box2D.Dynamics.b2FixtureDef
+            ,  b2Fixture = Box2D.Dynamics.b2Fixture
+            ,  b2World = Box2D.Dynamics.b2World
+            ,  b2MassData = Box2D.Collision.Shapes.b2MassData
+            ,  b2PolygonShape = Box2D.Collision.Shapes.b2PolygonShape
+            ,  b2CircleShape = Box2D.Collision.Shapes.b2CircleShape
+            ,  b2DebugDraw = Box2D.Dynamics.b2DebugDraw
+            ;
+
+
+
 var GameEngine = Class.extend({
       canvasHeight : 386,
       canvasWidth : 900,
@@ -21,17 +35,7 @@ var GameEngine = Class.extend({
 
 
          var that = this;
-         var   b2Vec2 = Box2D.Common.Math.b2Vec2
-         	,	b2BodyDef = Box2D.Dynamics.b2BodyDef
-         	,	b2Body = Box2D.Dynamics.b2Body
-         	,	b2FixtureDef = Box2D.Dynamics.b2FixtureDef
-         	,	b2Fixture = Box2D.Dynamics.b2Fixture
-         	,	b2World = Box2D.Dynamics.b2World
-         	,	b2MassData = Box2D.Collision.Shapes.b2MassData
-         	,	b2PolygonShape = Box2D.Collision.Shapes.b2PolygonShape
-         	,	b2CircleShape = Box2D.Collision.Shapes.b2CircleShape
-         	,	b2DebugDraw = Box2D.Dynamics.b2DebugDraw
-            ;
+
          
          this.world = new b2World(
                new b2Vec2(0, 150)    //gravity
@@ -54,17 +58,6 @@ var GameEngine = Class.extend({
          this.world.CreateBody(bodyDef).CreateFixture(fixDef);
 
 
-         //create a ball
-         fixDef.density = 1.0;
-         fixDef.friction = 0.5;
-         fixDef.restitution = 1;
-
-         bodyDef.type = b2Body.b2_dynamicBody;
-         bodyDef.position.x = 150/that.scale;
-         bodyDef.position.y = 45/that.scale;
-         fixDef.shape = new b2CircleShape(10/that.scale);
-         this.world.CreateBody(bodyDef).CreateFixture(fixDef);
-         
          //create some objects
 /*         bodyDef.type = b2Body.b2_dynamicBody;
          for(var i = 0; i < 10; ++i) {
@@ -138,9 +131,25 @@ var GameEngine = Class.extend({
 
       },
 
+      createBall: function(skin) {
+         var that = this;
+         //create a ball
+         var fixDef = new b2FixtureDef;
+         fixDef.density = 1.0;
+         fixDef.friction = 0.5;
+         fixDef.restitution = 1;
+
+         var bodyDef = new b2BodyDef;
+         bodyDef.type = b2Body.b2_dynamicBody;
+         bodyDef.position.x = skin.x/that.scale;
+         bodyDef.position.y = skin.y/that.scale;
+         fixDef.shape = new b2CircleShape(10/that.scale);
+         this.world.CreateBody(bodyDef).CreateFixture(fixDef);
+      },
+
       actorObject : function(body, skin) {
          var that = this;
-         
+
          var actor = 
          {
             body: body,
@@ -157,6 +166,9 @@ var GameEngine = Class.extend({
       startLoop: function()
       {
          var that = this;
+
+         this.createBall({x:100, y:45});
+
          createjs.Ticker.setFPS(30);
          createjs.Ticker.useRAF = true;
          createjs.Ticker.addListener(that);  // looks for "tick" function within THIS object
