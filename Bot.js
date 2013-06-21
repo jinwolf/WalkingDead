@@ -94,9 +94,6 @@ Bot = Player.extend({
    },
 
 
-
-
-
       update: function() {
         if (!this.alive) {
             //this.fade();
@@ -125,7 +122,7 @@ Bot = Player.extend({
             direction = "";
         }
 
-
+        var speed = 2;
         var that = this;
 
         if (direction == "left") {
@@ -133,7 +130,7 @@ Bot = Player.extend({
             this.isStopped = false;
             //position.x -= this.velocity;
             //dirX = -1;
-            that.vecX = -4;
+            that.vecX = -speed;
             that.body.SetLinearVelocity(new b2Vec2(that.vecX,0));
 
         } else if (direction == "right") {
@@ -141,7 +138,7 @@ Bot = Player.extend({
             this.isStopped = false;
             //position.x += this.velocity;
             //dirX = 1;
-            that.vecX = 4;
+            that.vecX = speed;
             that.body.SetLinearVelocity(new b2Vec2(that.vecX,0));
         }
         else {

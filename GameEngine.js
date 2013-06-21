@@ -22,6 +22,9 @@ var GameEngine = Class.extend({
 
       players: [],
       zombies: [],
+      zombieSprites: ['image/einstein-zombie.png', 'image/einstein-zombie.png'],
+      maxNumberOfZombies: 2,
+      currentZombieId: 0,
 
       playerImg: null,
       
@@ -32,7 +35,7 @@ var GameEngine = Class.extend({
             return;
          }
 
-         console.log('init', this.scale);
+         //console.log('init', this.scale);
 
 
          var that = this;
@@ -93,14 +96,16 @@ var GameEngine = Class.extend({
          //this.addBall(10, 10);
          //this.addPlayer(50, 10, 1);
 
-         gGameEngine.addPlayer(20,20,1);
-         gGameEngine.addZombie(280,20,1, 'image/einstein-zombie.png');
+         gGameEngine.addPlayer(150,20,1);
+         //gGameEngine.addZombie(280,20,1, this.zombieSprites[0]);
 
 
          if (!gInputEngine.bindings.length) {
             gInputEngine.setup();
          }
       },
+
+
 
       addBall: function(x,y)
       {
@@ -164,6 +169,24 @@ var GameEngine = Class.extend({
       
       tick : function(dt, paused){
 
+         if(gGameEngine.zombies && gGameEngine.zombies.length < 2)
+         {
+            var playerX = this.players[0].body.GetPosition().x;
+            var scaledPlayerX = playerX * this.scale;
+
+            var rnd = Math.random();
+            var choice = Math.round(rnd);
+            var scaledZombieX = rnd*300;
+
+            if(Math.abs(scaledPlayerX-scaledZombieX) > 100)
+            {
+               //console.log(scaledPlayerX, scaledZombieX);
+
+              gGameEngine.addZombie(scaledZombieX, 20, this.currentZombieId++, this.zombieSprites[choice]); 
+            }
+         }
+
+
         // Balls
         for (var i = 0; i < gGameEngine.balls.length; i++) {
             var ball = gGameEngine.balls[i];
@@ -210,7 +233,7 @@ var birds = (function() {
       var spawn = function() {
          var birdBMP = new createjs.Bitmap("image/bird.png");
          //birdBMP.x = Math.round(Math.random()*500);
-         birdBMP.x = Math.round(Math.random()*200);
+         birdBMP.x = Math.round(Math.random()*300);
          birdBMP.y = 30;
          birdBMP.regX = 25;   // important to set origin point to center of your bitmap
          birdBMP.regY = 25; 
