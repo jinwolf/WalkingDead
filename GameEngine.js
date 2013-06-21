@@ -25,6 +25,7 @@ var GameEngine = Class.extend({
       zombieSprites: ['image/einstein-zombie.png', 'image/shakespeare-zombie.png'],
       maxNumberOfZombies: 2,
       currentZombieId: 1,
+	  zombieKills: 0,
 
       playerImg: null,
       
@@ -155,7 +156,9 @@ var GameEngine = Class.extend({
             {
                this.removeBody(this.zombies[i].body);
                this.zombies.splice(i, 1);
-               console.log(this.zombies.length);
+               //console.log(this.zombies.length);
+			   this.zombieKills++;
+			   document.getElementById('scoreSpan').innerHTML = this.zombieKills;
             }
         }
       },

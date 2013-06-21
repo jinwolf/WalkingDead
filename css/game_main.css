@@ -16,6 +16,11 @@ h3
 	text-align: center;
 }
 
+#scoreBoard
+{
+	font:bold 16px Georgia, serif;
+}
+
 #canvas 
 {
 	background-image: url(../image/game_bg_rev2.jpg);
