@@ -22,7 +22,7 @@ var GameEngine = Class.extend({
 
       players: [],
       zombies: [],
-      zombieSprites: ['image/einstein-zombie.png', 'image/shakespeare-zombie.png'],
+      zombieSprites: ['image/einstein-zombie.png', 'image/shakespeare-zombie.png', 'image/tfs-zombie.png'],
       maxNumberOfZombies: 2,
       currentZombieId: 1,
 	  zombieKills: 0,
