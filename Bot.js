@@ -106,7 +106,6 @@ Bot = Player.extend({
         }
 
         var that = this;
-        this.isStopped = false;
         if (gInputEngine.actions[this.controls.up]) {
             //this.animate('up');
             // position.y -= this.velocity;
@@ -121,6 +120,7 @@ Bot = Player.extend({
 
         } else if (gInputEngine.actions[this.controls.left]) {
             this.animate('left');
+            this.isStopped = false;
             //position.x -= this.velocity;
             //dirX = -1;
             that.vecX = -4;
@@ -128,6 +128,7 @@ Bot = Player.extend({
 
         } else if (gInputEngine.actions[this.controls.right]) {
             this.animate('right');
+            this.isStopped = false;
             //position.x += this.velocity;
             //dirX = 1;
             that.vecX = 4;
@@ -152,6 +153,7 @@ Bot = Player.extend({
             that.body.SetLinearVelocity(new b2Vec2(0,0));
             that.isStopped = true;
         }
+
       },
 
        /**
