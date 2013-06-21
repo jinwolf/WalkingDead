@@ -115,29 +115,6 @@ var GameEngine = Class.extend({
          return player;
       },
 
-      // createBall: function(skin) {
-      //    var that = this;
-      //    //create a ball
-      //    var fixDef = new b2FixtureDef;
-      //    fixDef.density = 1.0;
-      //    fixDef.friction = 0.5;
-      //    fixDef.restitution = 1;
-
-      //    var bodyDef = new b2BodyDef;
-      //    bodyDef.type = b2Body.b2_dynamicBody;
-      //    bodyDef.position.x = skin.x/that.scale;
-      //    bodyDef.position.y = skin.y/that.scale;
-      //    fixDef.shape = new b2CircleShape(10/that.scale);
-
-      //    var body = this.world.CreateBody(bodyDef);
-      //    body.CreateFixture(fixDef);
-
-      //    // assign actor
-      //    var actor = this.actorObject(body, skin);
-      //    body.SetUserData(actor);  // set the actor as user data of the body so we can use it later: body.GetUserData()
-      //    this.bodies.push(body);
-      // },
-
       actorObject : function(body, skin) {
          
          var that = this;
@@ -151,15 +128,10 @@ var GameEngine = Class.extend({
                actor.skin.rotation = actor.body.GetAngle() * (180 / Math.PI);
                actor.skin.x = actor.body.GetWorldCenter().x * that.scale - 10;
                actor.skin.y = actor.body.GetWorldCenter().y * that.scale - 15 ;
-               //console.log();
+               
             }
          };
 
-         // this.update = function() {  // translate box2d positions to pixels
-         //    actor.skin.rotation = actor.body.GetAngle() * (180 / Math.PI);
-         //    actor.skin.x = actor.body.GetWorldCenter().x * that.scale;
-         //    actor.skin.y = actor.body.GetWorldCenter().y * that.scale;
-         // }
 
          that.actors.push(actor);
 
@@ -233,7 +205,6 @@ var birds = (function() {
 
          gGameEngine.stage.addChild(birdBMP);
          gGameEngine.createBall(birdBMP);
-         //box2d.createBird(birdBMP);
       }
 
       return {
