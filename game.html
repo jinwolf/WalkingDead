@@ -4,7 +4,7 @@
         <link rel="stylesheet" href="css/game_main.css" />
         <link rel="stylesheet" href="css/animation.css" />
 
-        <script type="text/javascript" src="./Box2D/Box2dWeb-2.1.a.3.js"></script>
+        <script type="text/javascript" src="./Box2D/Box2dWeb-2.1.a.3.min.js"></script>
         <script type="text/javascript" src="soundjs-0.4.1.min.js"></script>
         <script type="text/javascript" src="easel.js"></script>
         <script type="text/javascript" src="core.js"></script>
@@ -21,14 +21,14 @@
 		<h1>
 			The Walking Ancestors
 		</h1>
-		<h3>by Team Walking Dead - Max Sayenko, Dave Menninger, Ed Pearson & Jin Lee</h3>
+		<h3>by Team Walking Dead - Max Sayenko, Dave Menninger, Ed Pearson & Jin Lee<br/><span style="color:blue;">Use arrow keys to move; A key = shoot; S key = punch<span></h3>
+		<h1 id="scoreBoard">
+			Zombie Kills: <span id="scoreSpan">0</span>
+		</h1>
         <canvas id="canvas" class="common">
         </canvas>
         <canvas id="debugCanvas" class="common">
         </canvas>
-		<div id="scoreBoard" style="float:right">
-			Zombie Kills: <span id="scoreSpan">0</span>
-		</div>
         <script type="text/javascript">
             gGameEngine.init();
         </script>
